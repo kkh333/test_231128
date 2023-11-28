@@ -1,14 +1,15 @@
 <html layout:decorate="~{layout}">
 <div layout:fragment="content">
-    <form th:action="@{/article/create}" method="post">
+    <form th:action="@{/article/create}" th:object="${articleForm}" method="post">
+        <div th:replace="~{form_errors :: formErrorsFragment}"></div>
         <ul>
             <li>
                 <h3>제목</h3>
-                <input type="text" name="subject" id="subject">
+                <input type="text" name="subject" id="subject" th:field="*{subject}">
             </li>
             <li>
                 <h3>내용</h3>
-                <textarea name="content" id="content" cols="30" rows="10"></textarea>
+                <textarea name="content" id="content" cols="30" rows="10" th:field="*{content}"></textarea>
             </li>
         </ul>
         <input type="submit" value="저장">

@@ -11,6 +11,15 @@
             </div>
         </div>
     </div>
+    <h2 th:text="|${#lists.size(article.answerList)}개의 답변이 있습니다.|"></h2>
+    <ul>
+        <li th:each="answer : ${article.answerList}" th:text="${answer.content}"></li>
+    </ul>
+    <form th:action="@{|/answer/create/${article.id}|}" th:object="${answerForm}" method="post">
+        <div th:replace="~{form_errors :: formErrorsFragment}"></div>
+        <textarea th:field="*{content}" name="content" id="content" cols="30" rows="10"></textarea>
+        <input type="submit" value="답변등록">
+    </form>
     <a th:href="@{/article/list}" class="btn btn-primary">목록</a>
 </div>
 </html>

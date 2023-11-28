@@ -1,8 +1,11 @@
 package com.mysite.sbb.article;
 
+import com.mysite.sbb.answer.AnswerForm;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,18 +24,21 @@ public class ArticleController {
     }
 
     @GetMapping("/create")
-    public String create () {
+    public String create (ArticleForm articleForm) {
         return "article_create";
     }
 
     @PostMapping("/create")
-    public String create (@RequestParam("subject") String subject, @RequestParam("content") String content) {
-        this.articleService.articleCreate(subject, content);
+    public String create (@Valid ArticleForm articleForm, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "article_create";
+        }
+        this.articleService.articleCreate(articleForm.getSubject(), articleForm.getContent());
         return "redirect:/article/list";
     }
 
     @GetMapping("/detail/{id}")
-    public String detail (Model model, @PathVariable("id") Integer id) {
+    public String detail (Model model, @PathVariable("id") Integer id, AnswerForm answerForm) {
         Article article = this.articleService.getArticle(id);
         model.addAttribute("article", article);
         return "article_detail";
