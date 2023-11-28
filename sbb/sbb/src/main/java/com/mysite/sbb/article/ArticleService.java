@@ -2,6 +2,9 @@ package com.mysite.sbb.article;
 
 import com.mysite.sbb.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -33,5 +36,10 @@ public class ArticleService {
         else {
             throw new DataNotFoundException("article not found");
         }
+    }
+
+    public Page<Article> getList (int page) {
+        Pageable pageable = PageRequest.of(page, 10);
+        return this.articleRepository.findAll(pageable);
     }
 }

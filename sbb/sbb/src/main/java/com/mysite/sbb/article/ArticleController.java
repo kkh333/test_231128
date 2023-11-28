@@ -3,6 +3,7 @@ package com.mysite.sbb.article;
 import com.mysite.sbb.answer.AnswerForm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,9 +18,9 @@ public class ArticleController {
     private final ArticleService articleService;
 
     @GetMapping("/list")
-    public String list (Model model) {
-        List<Article> articleList = this.articleService.getArticleList();
-        model.addAttribute("articleList", articleList);
+    public String list (Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
+        Page<Article> articlePage = this.articleService.getList(page);
+        model.addAttribute("articlePage", articlePage);
         return "article_list";
     }
 

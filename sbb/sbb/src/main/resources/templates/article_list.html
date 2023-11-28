@@ -9,7 +9,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="article, loop : ${articleList}">
+            <tr th:each="article, loop : ${articlePage}">
                 <td th:text="${loop.count}"></td>
                 <td>
                     <a th:href="@{|/article/detail/${article.id}|}" th:text="${article.subject}"></a>
@@ -19,5 +19,18 @@
         </tbody>
     </table>
     <a th:href="@{/article/create}" class="btn btn-primary">등록</a>
+    <div th:if="${!articlePage.isEmpty()}">
+        <ul>
+            <li th:classappend="${!articlePage.hasPrevious} ? 'disabled'">
+                <a th:href="@{|?page=${articlePage.number-1}|}">이전</a>
+            </li>
+            <li th:each="page : ${#numbers.sequence(0, articlePage.totalPages-1)}" th:classappend="${page == articlePage.number} ? 'active'">
+                <a th:href="@"></a>
+            </li>
+            <li th:classappend="${!articlePage.hasNext} ? 'disabled'">
+                <a th:href="@{|?page=${articlePage.number+1}|}">다음</a>
+            </li>
+        </ul>
+    </div>
 </div>
 </html>
