@@ -14,6 +14,7 @@
                 <li class="nav-item">
                     <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/user/signup}">회원가입</a>
                 </li>
+                <li th:text="|${#authentication.getPrincipal().getUsername()}님|"></li>
             </ul>
         </div>
     </div>
