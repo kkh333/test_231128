@@ -15,7 +15,7 @@ class SbbApplicationTests {
 		for (int i = 1; i <= 100; i++) {
 			String subject = "제목입니다" + i + ".";
 			String content = "내용입니다" + i + ".";
-			this.articleService.articleCreate(subject, content);
+			this.articleService.articleCreate(subject, content, null);
 		}
 	}
 
