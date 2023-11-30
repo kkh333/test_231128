@@ -3,20 +3,24 @@
     <table class="table">
         <thead class="table-dark">
             <tr>
-                <th>번호</th>
-                <th>제목</th>
-                <th>날짜</th>
+                <th style="text-align: center;">번호</th>
+                <th style="text-align: center;">제목</th>
+                <th style="text-align: center;">작성자</th>
+                <th style="text-align: center;">작성일자</th>
             </tr>
         </thead>
         <tbody>
-            <tr th:each="article, loop : ${paging}">
+            <tr class="text-center" th:each="article, loop : ${paging}">
                 <td th:text="${paging.number * paging.size + loop.count}"></td>
-                <td>
+                <td class="text-start">
                     <a th:href="@{|/article/detail/${article.id}|}" th:text="${article.subject}"></a>
                     <span class="text-danger small ms-2"
                           th:if="${#lists.size(article.answerList) > 0}"
                           th:text="${#lists.size(article.answerList)}">
                     </span>
+                </td>
+                <td>
+                    <span th:if="${article.author != null}" th:text="${article.author.username}"></span>
                 </td>
                 <td th:text="${#temporals.format(article.createDate, 'yy-MM-dd HH:mm')}"></td>
             </tr>

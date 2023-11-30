@@ -1,6 +1,7 @@
 package com.mysite.sbb.answer;
 
 import com.mysite.sbb.article.Article;
+import com.mysite.sbb.user.SiteUser;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +20,11 @@ public class Answer {
     private String content;
 
     private LocalDateTime createDate;
+    private LocalDateTime modifyDate;
 
     @ManyToOne
     private Article article;
+
+    @ManyToOne
+    private SiteUser author;
 }

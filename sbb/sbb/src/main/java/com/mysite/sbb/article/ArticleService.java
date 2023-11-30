@@ -1,6 +1,7 @@
 package com.mysite.sbb.article;
 
 import com.mysite.sbb.DataNotFoundException;
+import com.mysite.sbb.user.SiteUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,11 +19,12 @@ import java.util.Optional;
 public class ArticleService {
     private final ArticleRepository articleRepository;
 
-    public void articleCreate(String subject, String content) {
+    public void articleCreate(String subject, String content, SiteUser user) {
         Article article = new Article();
         article.setSubject(subject);
         article.setContent(content);
         article.setCreateDate(LocalDateTime.now());
+        article.setAuthor(user);
         this.articleRepository.save(article);
     }
 
@@ -45,5 +47,16 @@ public class ArticleService {
         sorts.add(Sort.Order.desc("createDate"));
         Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
         return this.articleRepository.findAll(pageable);
+    }
+
+    public void modify(Article article, String subject, String content) {
+        article.setSubject(subject);
+        article.setContent(content);
+        article.setModifyDate(LocalDateTime.now());
+        this.articleRepository.save(article);
+    }
+
+    public void delete(Article article) {
+        this.articleRepository.delete(article);
     }
 }
