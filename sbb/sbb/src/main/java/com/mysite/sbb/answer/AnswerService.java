@@ -4,6 +4,7 @@ import com.mysite.sbb.DataNotFoundException;
 import com.mysite.sbb.article.Article;
 import com.mysite.sbb.user.SiteUser;
 import lombok.RequiredArgsConstructor;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -14,13 +15,14 @@ import java.util.Optional;
 public class AnswerService {
     private final AnswerRepository answerRepository;
 
-    public void answerCreate (Article article, String content, SiteUser author) {
+    public Answer answerCreate (Article article, String content, SiteUser author) {
         Answer answer = new Answer();
         answer.setContent(content);
         answer.setCreateDate(LocalDateTime.now());
         answer.setArticle(article);
         answer.setAuthor(author);
         this.answerRepository.save(answer);
+        return answer;
     }
 
     public Answer getAnswer(Integer id) {
